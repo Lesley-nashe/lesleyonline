@@ -1,5 +1,6 @@
 import { Box, Flex, Text, Button, Link } from "@chakra-ui/react"
-//import Logo from "./Logo";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Authentication/AuthProvider";
 
 const MenuItem = (props: any) => {
   const { children, isLast, ...rest } = props
@@ -16,7 +17,9 @@ const MenuItem = (props: any) => {
 }
 
 const Header = (props: any) => {
-
+  const navigate = useNavigate();
+  const user = useAuth();
+  const logStatus = user.token ? "LogOut" : "LogIn" 
   return (
     <Flex
       as="nav"
@@ -42,10 +45,10 @@ const Header = (props: any) => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/">Home</MenuItem>
-          <MenuItem to="/products">Products </MenuItem>
-          <MenuItem to="/cart">Cart</MenuItem>
-          <MenuItem to="/signup">
+          <MenuItem onClick={() => navigate("/")} fontSize='16px' fontWeight="bold">Home</MenuItem>
+          <MenuItem onClick={() => navigate("/products")} fontSize='16px' fontWeight='bold'>Products </MenuItem>
+          <MenuItem to="/cart" fontSize='16px' fontWeight="bold">Cart</MenuItem>
+          <MenuItem onClick={() => !user.token ? navigate("/login") : navigate('/logout')}>
             <Button
               size="sm"
               rounded="md"
@@ -58,7 +61,7 @@ const Header = (props: any) => {
                 ],
               }}
             >
-              Login
+             {logStatus}
             </Button>
           </MenuItem>
         </Flex>

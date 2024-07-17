@@ -1,67 +1,94 @@
-import React, { useState } /*{ useContext, createContext, useState } */ from 'react'
-import { useAuth } from '../../Authentication/AuthProvider';
-// import {Text} from "@chakra-ui/react"
-// import { Route, Link, useLocation } from "react-router-dom";
+import React from "react";
+import { useAuth } from "../../Authentication/AuthProvider";
+import {
+  Button,
+  Flex,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Text,
+} from "@chakra-ui/react";
+import { Formik, Field, Form } from "formik";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
-
   const auth = useAuth();
-  const handleSubmitEvent = (e: any) => {
-    e.preventDefault();
-    if (input.email !== "" && input.password !== "") {
-      auth.loginAction(input);
-      return
+  const navigate = useNavigate();
+  const handleSubmitEvent = (email: string, password: string) => {
+    if (email !== "" && password !== "") {
+      auth.loginAction({ email, password });
+      return;
     }
     alert("please provide a valid input");
   };
 
-  const handleInput = (e: any) => {
-    const { name, value } = e.target;
-    console.log(name, value, '24')
-    setInput((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   return (
-    <form onSubmit={handleSubmitEvent}>
-      <div className="form_control">
-        <label htmlFor="user-email">Email:</label>
-        <input
-          type="email"
-          id="user-email"
-          name="email"
-          placeholder="example@yahoo.com"
-          aria-describedby="user-email"
-          aria-invalid="false"
-          onChange={handleInput}
-        />
-        <div id="user-email" className="sr-only">
-          Please enter a valid username. It must contain at least 6 characters.
-        </div>
-      </div>
-      <div className="form_control">
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          aria-describedby="user-password"
-          aria-invalid="false"
-          onChange={handleInput}
-        />
-        <div id="user-password" className="sr-only">
-          your password should be more than 6 character
-        </div>
-      </div>
-      <button className="btn-submit">Submit</button>
-    </form>
+    <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
+      <Flex justifyContent={"center"} width={"50%"}>
+        <Flex direction={"column"}>
+          <Flex justifyContent={"center"}>
+            <Text fontSize={"50px"} fontWeight="bold">
+              Log In
+            </Text>
+          </Flex>
+          <Flex>
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              onSubmit={(values) => {
+                console.log(values);
+                handleSubmitEvent(values.email, values.password);
+              }}
+            >
+              <Form>
+                <Flex width={"500px"} direction="column" mb={3}>
+                  <FormLabel htmlFor="email">Email Address</FormLabel>
+                  <Field
+                    as={Input}
+                    id="user-email"
+                    name="email"
+                    type="email"
+                    variant="filled"
+                  />
+                </Flex>
+                <Flex direction="column" mb={3}>
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <Field
+                    as={Input}
+                    id="password"
+                    name="password"
+                    type="password"
+                    variant="filled"
+                  />
+                  <FormErrorMessage></FormErrorMessage>
+                </Flex>
+                <Flex direction={'row'} justifyContent={"center"} mt={4}>
+                  <Button
+                    colorScheme="white"
+                    background="#22bb33"
+                    type="submit"
+                    mx={2}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    colorScheme="white"
+                    background="#3457D5"
+                    mx={2}
+                    onClick={() => navigate("/signup")}
+                  >
+                    Sign Up
+                  </Button>
+                </Flex>
+              </Form>
+            </Formik>
+          </Flex>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 };
 
-export default LoginPage
+export default LoginPage;

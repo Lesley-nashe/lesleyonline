@@ -8,6 +8,7 @@ import ProfilePage from './ProfilePage'
 import CheckoutPage from './CheckOutPage'
 import AuthProvider from '../Authentication/AuthProvider'
 import PrivateRoute from '../components/PrivateRoutes'
+import RegistrationPage from './RegisterPage'
 
 const ProductPages = () => {
     
@@ -18,6 +19,7 @@ const ProductPages = () => {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<RegistrationPage />} />
                 <Route element={<PrivateRoute />}>
                   <Route path="/products" element={<Products />} />
                   <Route path="/profile" element={<ProfilePage />} />
