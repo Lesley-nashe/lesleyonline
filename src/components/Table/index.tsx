@@ -25,7 +25,6 @@ const TableComponent: FC<TableProps> = ({header , columns, Data}) => {
 
   const [value, setValue] = useState("");
   const handleChange = (event: any) => setValue(event.target.value);
-
   const filteredTable = Data.filter((item: any) => {
     const searchText = value.toLowerCase();
     const nameSearch = item.name.toLowerCase();
@@ -37,10 +36,10 @@ const TableComponent: FC<TableProps> = ({header , columns, Data}) => {
     <Flex width={"100%"} justifyContent={"center"}>
       <Flex width={"100%"} justifyContent={"center"}>
         <Flex width={"80%"} direction={"column"} justifyContent={"center"}>
-          <Flex my={5} justifyContent={"center"}>
+          <Flex my={3} justifyContent={"center"}>
             <Heading> {header} </Heading>
           </Flex>
-          <Flex justifyContent="flex-end">
+          <Flex my={2} justifyContent="flex-end">
             <Input
               value={value}
               onChange={handleChange}
@@ -54,7 +53,6 @@ const TableComponent: FC<TableProps> = ({header , columns, Data}) => {
                 Products brought to you by LesleyOnline!!
               </TableCaption>
               <Thead>
-
                 <Tr>
                   {columns?.map((item) => (
                     <Th key={String(item.fieled)}>{item.title}</Th>
@@ -66,7 +64,7 @@ const TableComponent: FC<TableProps> = ({header , columns, Data}) => {
                   <Tr>
                     {columns?.map((element: column, idx) =>
                      (
-                        <Td key={idx}>{item[String(element.title)]}</Td>
+                        <Td key={idx}>{item[String(element.fieled)]}</Td>
                       )
                     )}
                   </Tr>

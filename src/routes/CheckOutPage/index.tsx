@@ -1,68 +1,100 @@
-import React from 'react'
-import {Text} from "@chakra-ui/react"
-import TableComponent from '../../components/Table'
-import { column } from '../../helpers'
+import React from "react";
+import TableComponent from "../../components/Table";
+import { checkoutItem, column } from "../../helpers";
+import { Button, Flex } from "@chakra-ui/react";
 
 const CheckoutPage = () => {
-  const columns = [{
-    title: "name",
-    fieled: "name"
-  },
-  {
-    title: "description",
-    fieled: "description"
-  },
-  {
-    title: "price",
-    fieled: "price"
-  },
-  {
-    title: "inventoryCount",
-    fieled: "inventoryCount"
-  }] as column[]
+  const columns = [
+    {
+      title: "name",
+      fieled: "name",
+    },
+    {
+      title: "description",
+      fieled: "description",
+    },
+    {
+      title: "price",
+      fieled: "price",
+    },
+    {
+      title: "count",
+      fieled: "count",
+    },
+    {
+      title: "",
+      fieled: "action",
+    },
+  ] as column[];
 
-  const products = [
+  let products = [
     {
       name: "Bread",
       description: "Baked product for eating",
       price: 11.45,
-      inventoryCount: 1000,
+      count: 2,
     },
     {
       name: "Table",
       description: "Office and home furniture to place things",
       price: 1400.89,
-      inventoryCount: 17,
+      count: 1,
     },
     {
       name: "Milk",
       description: "Dairy beverage product",
       price: 20.0,
-      inventoryCount: 899,
+      count: 2,
     },
     {
       name: "Television",
       description: "Home and ofiice furniture for entertainment",
       price: 6700.89,
-      inventoryCount: 32,
+      count: 1,
     },
     {
       name: "Screwdriver",
       description: "Tool used for building and repairing objects",
       price: 45.9,
-      inventoryCount: 10,
+      count: 1,
     },
     {
       name: "Test",
       description: "test",
       price: 45.9,
-      inventoryCount: 10,
-    }
-  ];
+      count: 1,
+    },
+  ] as checkoutItem[];
+
+  const finalPurchaseList: checkoutItem[] = products.map((item) => {
+    return {
+      ...item,
+      action: (
+        <>
+          <Button mx={2}>+</Button> <Button>-</Button>
+        </>
+      )
+    };
+  });
 
   return (
-    <TableComponent header='Checkout List' columns={columns} Data={products} />
-  )
-}
+    <Flex justifyContent={"center"} width={"100%"}>
+      <Flex justifyContent={"center"} width={"100%"}>
+        <Flex width={'100%'} direction={'column'}>
+        <TableComponent
+          header="Cart"
+          columns={columns}
+          Data={finalPurchaseList}
+        />
+        <Flex mb={5} mr={10} justifyContent="flex-end">
+          <Button colorScheme="white" background="#22bb33">
+            Checkout
+          </Button>
+        </Flex>
+        </Flex>
+      </Flex>
+    </Flex>
+  );
+};
 
-export default CheckoutPage
+export default CheckoutPage;

@@ -47,7 +47,7 @@ const Header = (props: any) => {
         >
           <MenuItem onClick={() => navigate("/")} fontSize='16px' fontWeight="bold">Home</MenuItem>
           <MenuItem onClick={() => navigate("/products")} fontSize='16px' fontWeight='bold'>Products </MenuItem>
-          <MenuItem to="/cart" fontSize='16px' fontWeight="bold">Cart</MenuItem>
+          <MenuItem onClick={() => navigate("/checkout")} fontSize='16px' fontWeight="bold">Cart</MenuItem>
           <MenuItem onClick={() => !user.token ? navigate("/login") : navigate('/logout')}>
             <Button
               size="sm"

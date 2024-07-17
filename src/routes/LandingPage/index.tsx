@@ -1,23 +1,9 @@
-import React, { FC, useState } from "react";
-import {
-  Flex,
-  Heading,
-  Input,
-  Table,
-  TableCaption,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import React from "react";
 import TableComponent from "../../components/Table";
-import { column } from "../../helpers";
+import { column, ProductItem } from "../../helpers";
+import { Button } from "@chakra-ui/react";
 
-const HomePage = ({}) => {
+const HomePage = () => {
 
   const columns = [{
     title: "name",
@@ -34,7 +20,11 @@ const HomePage = ({}) => {
   {
     title: "inventoryCount",
     fieled: "inventoryCount"
-  }] as column[]
+  },{
+  title: "",
+  fieled: "action"
+}
+] as column[]
 
   const products = [
     {
@@ -67,11 +57,16 @@ const HomePage = ({}) => {
       price: 45.9,
       inventoryCount: 10,
     },
-  ];
+  ] as ProductItem[];
 
+  const finalProductList: ProductItem[] = products.map((item) => {
+    return{ 
+      ...item,
+      action: <> <Button mx={2}>Add to Cart</Button> </>}; // Ensure to return the modified item
+  })
 
   return (
-    <TableComponent header={"Home Page"} columns={columns} Data={products} />
+    <TableComponent header={"Home Page"} columns={columns} Data={finalProductList} />
   );
 };
 
