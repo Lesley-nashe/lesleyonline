@@ -29,7 +29,8 @@ export const addToCart = (product: CartItem) => {
   const localStorageCart = localStorage.getItem('cart')
   if(!localStorageCart)
     {
-    cart.push(product)
+    const initCartItem: CartItem = {name: product.name, description: product.description, price: product.price, count: 1}
+    cart.push(initCartItem)
     localStorage.setItem('cart', JSON.stringify(cart))
   }
   else {
@@ -46,7 +47,8 @@ export const addToCart = (product: CartItem) => {
       localStorage.removeItem('cart')
       localStorage.setItem('cart',JSON.stringify(finalshoppingCart))
     } else {
-      shoppingCart.push(product)
+      const initCartItem: CartItem = {name: product.name, description: product.description, price: product.price, count: 1}
+      shoppingCart.push(initCartItem)
       localStorage.removeItem('cart')
       localStorage.setItem('cart',JSON.stringify(shoppingCart))
     }

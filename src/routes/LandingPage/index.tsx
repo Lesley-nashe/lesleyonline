@@ -1,12 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { CartItem, ProductItem } from "../../helpers";
-import { Flex, Heading, Input, SimpleGrid, Text, useToast } from "@chakra-ui/react";
+import { Flex, Heading, Input, SimpleGrid } from "@chakra-ui/react";
 import { getProducts } from "../../Apis/products/request";
 import useApiResult from "../../Apis/products/apiResult";
 import ProductCard from "../../components/Product";
 
 const HomePage = () => {
-  const toast = useToast();
   const request = useMemo(() => getProducts(), []);
   const results = useApiResult(request) as unknown as [];
   const data: ProductItem[] = results.map((item: any) => {

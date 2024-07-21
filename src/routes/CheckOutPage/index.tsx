@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "../../components/Table";
-import { addToCart, CartItem, column } from "../../helpers";
+import { addToCart, CartItem, column, removeItem } from "../../helpers";
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
 import CheckOutModal from "../../components/Modal";
 
 const CheckoutPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const  [cartList, setCartList] = useState<CartItem[]>([])
   
   const columns = [
     {
@@ -32,6 +33,8 @@ const CheckoutPage = () => {
 
   const userCart = JSON.parse(localStorage.getItem('cart') || '[]');
 
+  useEffect(() => {
+
   const shoppingCart: CartItem[] =  userCart as unknown as CartItem[]
 
   const finalShoppingCart = shoppingCart.map((item) => {
@@ -49,11 +52,16 @@ const CheckoutPage = () => {
       ...item,
       action: (
         <>
-          <Button onClick={() => addToCart(item)} mx={2}>+</Button> <Button>-</Button>
+          <Button onClick={() => addToCart(item)} mx={2}>+</Button> <Button onClick={() => removeItem(item)}>-</Button>
         </>
       )
     };
   });
+
+  setCartList(finalPurchaseList)
+},[userCart])
+
+ 
 
   return (
     <Flex justifyContent={"center"} width={"100%"}>
@@ -62,7 +70,7 @@ const CheckoutPage = () => {
         <TableComponent
           header="Cart"
           columns={columns}
-          Data={finalPurchaseList}
+          Data={cartList}
         />
         <Flex mb={5} mr={10} justifyContent="flex-end">
           <Button onClick={onOpen} colorScheme="white" background="#22bb33">

@@ -1,6 +1,7 @@
 import { Box, Flex, Text, Button, Link, Heading } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Authentication/AuthProvider";
+import { useLogout } from "../../hooks/useLogin";
 
 const MenuItem = (props: any) => {
   const { children, isLast, ...rest } = props
@@ -18,6 +19,7 @@ const MenuItem = (props: any) => {
 
 const Header = (props: any) => {
   const navigate = useNavigate();
+  const {logout} = useLogout()
   const {user} = useAuth();
   const logStatus = user ? "LogOut" : "LogIn" 
   console.log(user)
@@ -48,6 +50,7 @@ const Header = (props: any) => {
         >
           <MenuItem onClick={() => navigate("/")} fontSize='16px' fontWeight="bold">Home</MenuItem>
           <MenuItem onClick={() => navigate("/products")} fontSize='16px' fontWeight='bold'>Products </MenuItem>
+          <MenuItem onClick={() => navigate("/profile")} fontSize='16px' fontWeight='bold'>Profile</MenuItem>
           <MenuItem onClick={() => navigate("/checkout")} fontSize='16px' fontWeight="bold">Cart</MenuItem>
           <MenuItem >
             <Button
@@ -61,6 +64,7 @@ const Header = (props: any) => {
                   "primary.600",
                 ],
               }}
+              onClick={() => logout()}
             >
              { logStatus }
             </Button>
