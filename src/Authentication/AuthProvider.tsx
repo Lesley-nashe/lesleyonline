@@ -1,74 +1,54 @@
-import { useContext, createContext, useState, FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, createContext, useReducer, useEffect } from "react";
 
-type loginData = {
-    email: String,
-    password: String
+type user = {
+  email: String,
+  username: String,
+  Id: String 
 }
 
-interface AuthProviderProps {
-    children: React.ReactNode;
+const initialUser: user = {email: '', username: '', Id: ''} 
+
+const init: any = {};
+
+export const AuthContext = createContext(init)
+
+export const authReducer = (state: any, action: any) => {
+
+  switch (action.type){
+    case 'Login':
+      return { user: action.payload  }
+    case 'Logout':
+      return null
+    default:
+      return state
   }
+}
 
-  const AuthContext = createContext<{
-    token: string;
-    user: any | null;
-    loginAction: (data: loginData) => Promise<void>;
-    logOut: () => void;
-  }>({
-    token: '',
-    user: null,
-    loginAction: async () => {},
-    logOut: () => {},
-  });
+export const AuthContextProvider = ({children} : {children: any}) => {
+  const [state, dispatch] = useReducer(authReducer, {
+    user: initialUser
+  })
 
+  useEffect(() => {
 
-const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("site") || "");
-  const navigate = useNavigate();
-  const loginAction = async (data: loginData) => {
-    try {
-        console.log(data)
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
-      console.log(res);
-      if (res.user) {
-        console.log(res.user)
-        setUser(res.user);
-        setToken(res.user.authentication.sessionToken);
-        localStorage.setItem("site", res.user.authentication.sessionToken);
-        navigate("/products");
-        return;
-      }
-      throw new Error(res.message);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const localstorageUser = JSON.parse(localStorage.getItem('user') || '{}')
 
-  const logOut = () => {
-    setUser(null);
-    setToken("");
-    localStorage.removeItem("site");
-    navigate("/login");
-  };
+  localstorageUser ? dispatch({type: 'Login', payload: localstorageUser}) : dispatch({type: 'Logout', payload: null})
+
+  },[])
+
+  console.log('AuthConetxt state', state)
+
+  
 
   return (
-    <AuthContext.Provider value={{ token, user, loginAction, logOut }}>
+    <AuthContext.Provider value={{...state, dispatch}}>
       {children}
     </AuthContext.Provider>
-  );
+  )
+}
 
-};
-
-export default AuthProvider;
+export default AuthContextProvider;
 
 export const useAuth = () => {
   return useContext(AuthContext);

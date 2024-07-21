@@ -19,7 +19,7 @@ const MenuItem = (props: any) => {
 const Header = (props: any) => {
   const navigate = useNavigate();
   const user = useAuth();
-  const logStatus = user.token ? "LogOut" : "LogIn" 
+  //const logStatus = user.token ? "LogOut" : "LogIn" 
   return (
     <Flex
       as="nav"
@@ -48,7 +48,7 @@ const Header = (props: any) => {
           <MenuItem onClick={() => navigate("/")} fontSize='16px' fontWeight="bold">Home</MenuItem>
           <MenuItem onClick={() => navigate("/products")} fontSize='16px' fontWeight='bold'>Products </MenuItem>
           <MenuItem onClick={() => navigate("/checkout")} fontSize='16px' fontWeight="bold">Cart</MenuItem>
-          <MenuItem onClick={() => !user.token ? navigate("/login") : navigate('/logout')}>
+          <MenuItem >
             <Button
               size="sm"
               rounded="md"
@@ -61,7 +61,7 @@ const Header = (props: any) => {
                 ],
               }}
             >
-             {logStatus}
+             {/* {logStatus} */}
             </Button>
           </MenuItem>
         </Flex>

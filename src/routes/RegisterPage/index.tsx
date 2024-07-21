@@ -7,18 +7,18 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { useAuth } from "../../Authentication/AuthProvider";
+// import { useAuth } from "../../Authentication/AuthProvider";
 import { Field, Form, Formik } from "formik";
+import { useSignUp } from "../../hooks/useSignUp";
+
 
 const RegistrationPage = () => {
-  const auth = useAuth();
-  const handleSubmitEvent = (email: string, password: string) => {
-    if (email !== "" && password !== "") {
-      auth.loginAction({ email, password });
-      return;
+  const { signup, isLoading, error } = useSignUp()
+  const handleSubmitEvent = async (email: string, username:string, password: string) => {
+    if (email !== "" && username !=="" && password !== "") await signup(email, username, password);
+    else alert("please provide a valid input");
     }
-    alert("please provide a valid input");
-  };
+    
 
   return (
     <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
@@ -34,10 +34,11 @@ const RegistrationPage = () => {
               initialValues={{
                 email: "",
                 password: "",
+                username: ""
               }}
               onSubmit={(values) => {
                 console.log(values);
-                handleSubmitEvent(values.email, values.password);
+                handleSubmitEvent(values.email, values.username, values.password);
               }}
             >
               <Form>

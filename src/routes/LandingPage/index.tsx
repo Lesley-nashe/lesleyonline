@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useMemo } from "react";
 import TableComponent from "../../components/Table";
-import { column, ProductItem } from "../../helpers";
-import { Button } from "@chakra-ui/react";
+import { addToCart, CartItem, column, ProductItem } from "../../helpers";
+import { Button, useToast } from "@chakra-ui/react";
+import { getProducts } from "../../Apis/products/request";
+import useApiResult from "../../Apis/products/apiResult";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
 
 const HomePage = () => {
+  const toast = useToast()
+  const request = useMemo(() => getProducts(), []);
+  const results = useApiResult(request) as unknown as [];
+  const data: ProductItem[] = results.map((item: any) =>{
+    return item
+  })
 
   const columns = [{
     title: "name",
@@ -18,51 +28,32 @@ const HomePage = () => {
     fieled: "price"
   },
   {
-    title: "inventoryCount",
-    fieled: "inventoryCount"
+    title: "count",
+    fieled: "count"
   },{
   title: "",
   fieled: "action"
 }
-] as column[]
+  ] as column[]
 
-  const products = [
-    {
-      name: "Bread",
-      description: "Baked product for eating",
-      price: 11.45,
-      inventoryCount: 1000,
-    },
-    {
-      name: "Table",
-      description: "Office and home furniture to place things",
-      price: 1400.89,
-      inventoryCount: 17,
-    },
-    {
-      name: "Milk",
-      description: "Dairy beverage product",
-      price: 20.0,
-      inventoryCount: 899,
-    },
-    {
-      name: "Television",
-      description: "Home and ofiice furniture for entertainment",
-      price: 6700.89,
-      inventoryCount: 32,
-    },
-    {
-      name: "Screwdriver",
-      description: "Tool used for building and repairing objects",
-      price: 45.9,
-      inventoryCount: 10,
-    },
-  ] as ProductItem[];
-
-  const finalProductList: ProductItem[] = products.map((item) => {
+  const finalProductList: CartItem[] = data.map((item) => {
+    const newItem = {
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      count: item.inventoryCount,
+    }
     return{ 
-      ...item,
-      action: <> <Button mx={2}>Add to Cart</Button> </>}; // Ensure to return the modified item
+      ...newItem,
+      action: <> <Button onClick={() => { addToCart(newItem)
+        toast({
+          title: 'Item Added To Cart',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+      }} mx={2}>Add to Cart</Button> </>}; // Ensure to return the modified item
   })
 
   return (

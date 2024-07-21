@@ -1,9 +1,12 @@
 import React from "react";
 import TableComponent from "../../components/Table";
-import { checkoutItem, column } from "../../helpers";
-import { Button, Flex } from "@chakra-ui/react";
+import { addToCart, CartItem, column } from "../../helpers";
+import { Button, Flex, useDisclosure } from "@chakra-ui/react";
+import CheckOutModal from "../../components/Modal";
 
 const CheckoutPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  
   const columns = [
     {
       title: "name",
@@ -27,51 +30,26 @@ const CheckoutPage = () => {
     },
   ] as column[];
 
-  let products = [
-    {
-      name: "Bread",
-      description: "Baked product for eating",
-      price: 11.45,
-      count: 2,
-    },
-    {
-      name: "Table",
-      description: "Office and home furniture to place things",
-      price: 1400.89,
-      count: 1,
-    },
-    {
-      name: "Milk",
-      description: "Dairy beverage product",
-      price: 20.0,
-      count: 2,
-    },
-    {
-      name: "Television",
-      description: "Home and ofiice furniture for entertainment",
-      price: 6700.89,
-      count: 1,
-    },
-    {
-      name: "Screwdriver",
-      description: "Tool used for building and repairing objects",
-      price: 45.9,
-      count: 1,
-    },
-    {
-      name: "Test",
-      description: "test",
-      price: 45.9,
-      count: 1,
-    },
-  ] as checkoutItem[];
+  const userCart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-  const finalPurchaseList: checkoutItem[] = products.map((item) => {
+  const shoppingCart: CartItem[] =  userCart as unknown as CartItem[]
+
+  const finalShoppingCart = shoppingCart.map((item) => {
+    const newItem = {
+      name: item.name,
+      description: item.description,
+      price: item.count * item.price,
+      count: item.count
+    }
+    return newItem
+  })
+
+  const finalPurchaseList: CartItem[] = finalShoppingCart.map((item) => {
     return {
       ...item,
       action: (
         <>
-          <Button mx={2}>+</Button> <Button>-</Button>
+          <Button onClick={() => addToCart(item)} mx={2}>+</Button> <Button>-</Button>
         </>
       )
     };
@@ -87,9 +65,10 @@ const CheckoutPage = () => {
           Data={finalPurchaseList}
         />
         <Flex mb={5} mr={10} justifyContent="flex-end">
-          <Button colorScheme="white" background="#22bb33">
+          <Button onClick={onOpen} colorScheme="white" background="#22bb33">
             Checkout
           </Button>
+          <CheckOutModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
         </Flex>
         </Flex>
       </Flex>

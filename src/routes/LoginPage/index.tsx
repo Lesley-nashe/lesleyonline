@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../../Authentication/AuthProvider";
+// import { useAuth } from "../../Authentication/AuthProvider";
 import {
   Button,
   Flex,
@@ -10,13 +10,14 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 const LoginPage = () => {
-  const auth = useAuth();
+  const {login, isLoading, error} = useLogin()
   const navigate = useNavigate();
-  const handleSubmitEvent = (email: string, password: string) => {
+  const handleSubmitEvent = async (email: string, password: string) => {
     if (email !== "" && password !== "") {
-      auth.loginAction({ email, password });
+      await login( email, password );
       return;
     }
     alert("please provide a valid input");

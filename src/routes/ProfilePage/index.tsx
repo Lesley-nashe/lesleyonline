@@ -2,23 +2,15 @@ import React from "react";
 import {
   Button,
   Flex,
-  FormErrorMessage,
   FormLabel,
   Input,
   Text,
 } from "@chakra-ui/react";
-import { useAuth } from "../../Authentication/AuthProvider";
 import { Field, Form, Formik } from "formik";
 
 const ProfilePage = () => {
-  const auth = useAuth();
-  const handleSubmitEvent = (email: string, password: string) => {
-    if (email !== "" && password !== "") {
-      auth.loginAction({ email, password });
-      return;
-    }
-    alert("please provide a valid input");
-  };
+
+  const user = JSON.parse(localStorage.getItem('user') || '[]')
 
   return (
     <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
@@ -32,12 +24,13 @@ const ProfilePage = () => {
           <Flex>
             <Formik
               initialValues={{
-                email: "",
+                email: user.email,
                 password: "",
+                username: user.username
               }}
               onSubmit={(values) => {
                 console.log(values);
-                handleSubmitEvent(values.email, values.password);
+                // handleSubmitEvent(values.email, values.password);
               }}
             >
               <Form>
@@ -71,24 +64,13 @@ const ProfilePage = () => {
                     variant="filled"
                   />
                 </Flex>
-                <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="password">Re-enter Password</FormLabel>
-                  <Field
-                    as={Input}
-                    id="password"
-                    name="password"
-                    type="password"
-                    variant="filled"
-                  />
-                  <FormErrorMessage></FormErrorMessage>
-                </Flex>
                 <Flex mt={4}>
                   <Button
                     colorScheme="white"
                     background="#22bb33"
                     type="submit"
                   >
-                    SignUp
+                    Edit
                   </Button>
                 </Flex>
               </Form>
