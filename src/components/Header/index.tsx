@@ -18,8 +18,9 @@ const MenuItem = (props: any) => {
 
 const Header = (props: any) => {
   const navigate = useNavigate();
-  const user = useAuth();
-  //const logStatus = user.token ? "LogOut" : "LogIn" 
+  const {user} = useAuth();
+  const logStatus = user ? "LogOut" : "LogIn" 
+  console.log(user)
   return (
     <Flex
       as="nav"
@@ -61,7 +62,7 @@ const Header = (props: any) => {
                 ],
               }}
             >
-             {/* {logStatus} */}
+             { logStatus }
             </Button>
           </MenuItem>
         </Flex>
