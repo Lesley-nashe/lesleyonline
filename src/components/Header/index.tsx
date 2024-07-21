@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Button, Link } from "@chakra-ui/react"
+import { Box, Flex, Text, Button, Link, Heading } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Authentication/AuthProvider";
 
@@ -34,7 +34,7 @@ const Header = (props: any) => {
       {...props}
     >
       <Flex align="center">
-       {/* <Logo height={44} /> */}
+       { <Heading>LesleyOnline!!!!</Heading>}
       </Flex>
 
       <Box

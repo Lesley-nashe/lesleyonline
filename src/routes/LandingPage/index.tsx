@@ -34,8 +34,8 @@ const HomePage = () => {
 
   return (
     <Flex justifyContent={"center"} width={"100%"}>
-      <Flex justifyContent={"center"} width={"80%"}>
-        <Flex width={"100%"} direction={'column'} justifyContent={"center"}>
+      <Flex justifyContent={"center"} width={"100%"}>
+        <Flex width={'100%'} px={'4%'} direction={'column'} justifyContent={"center"}>
           <Flex my={3} justifyContent={"center"}>
           <Heading>Home page</Heading>
           </Flex>
