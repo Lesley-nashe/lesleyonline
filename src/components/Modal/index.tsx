@@ -33,8 +33,8 @@ const CheckOutModal: FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
     const newItem = {
       name: item.name,
       description: item.description,
-      price: item.count * item.price,
-      count: item.count
+      price: item.orderCount * item.price,
+      count: item.orderCount
     }
     return newItem
   });

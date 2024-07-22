@@ -10,7 +10,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { FC } from "react";
-import { addToCart, ProductItem } from "../../helpers";
+import { addToCart, CartItem } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 
 interface ProductProps {
@@ -30,11 +30,12 @@ const ProductCard: FC<ProductProps> = ({
 }) => {
   const toast = useToast();
   const navigate = useNavigate();
-  const newItem: ProductItem = {
+  const newItem: CartItem = {
     name: name,
     description: description,
     price: price,
     inventoryCount: inventoryCount,
+    orderCount: 1,
     _id: id
   };
   return (

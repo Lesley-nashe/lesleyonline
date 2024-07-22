@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TableComponent from "../../components/Table";
 import {
   addToCart,
+  CartItem,
   column,
   ProductItem,
   removeItem,
@@ -11,7 +12,7 @@ import CheckOutModal from "../../components/Modal";
 
 const CheckoutPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cartList, setCartList] = useState<ProductItem[]>([]);
+  const [cartList, setCartList] = useState<CartItem[]>([]);
   const userCart = JSON.parse(localStorage.getItem("cart") || "[]");
   const [change, setHaschanged] = useState(0);
 
@@ -30,7 +31,7 @@ const CheckoutPage = () => {
     },
     {
       title: "count",
-      fieled: "inventoryCount",
+      fieled: "orderCount",
     },
     {
       title: "",
@@ -38,12 +39,12 @@ const CheckoutPage = () => {
     },
   ] as column[];
 
-  const cartAddition = (item: ProductItem) => {
+  const cartAddition = (item: CartItem) => {
     setHaschanged(change + 1);
     addToCart(item);
   };
 
-  const cartSubtraction = (item: ProductItem) => {
+  const cartSubtraction = (item: CartItem) => {
     setHaschanged(change - 1);
     removeItem(item);
   };
@@ -51,17 +52,18 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (!userCart) return;
 
-    const shoppingCart: ProductItem[] = userCart as unknown as ProductItem[];
+    const shoppingCart: CartItem[] = userCart as unknown as CartItem[];
 
     setCartList(shoppingCart);
   }, [change]);
 
-  const finalShoppingCart: ProductItem[] = cartList.map((item) => {
+  const finalShoppingCart: CartItem[] = cartList.map((item) => {
     const newItem = {
       name: item.name,
       description: item.description,
-      price: item.inventoryCount * item.price,
+      price: item.orderCount * item.price,
       inventoryCount: item.inventoryCount,
+      orderCount: item.orderCount,
       _id: item._id
     };
     return {

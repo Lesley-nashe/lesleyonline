@@ -11,88 +11,104 @@ export type checkoutItem = {
 };
 
 export type ProductItem = {
-    name: String;
-    description: String;
-    price: number;
-    inventoryCount: number;
-    _id: String
-  };
+  name: String;
+  description: String;
+  price: number;
+  inventoryCount: number;
+  _id: String;
+};
 
 export type CartItem = {
   name: String;
   description: String;
   price: number;
-  count: number;
-} 
+  inventoryCount: number;
+  orderCount: number;
+  _id: String;
+};
 
-
-export const addToCart = (product: ProductItem) => {
+export const addToCart = (product: CartItem) => {
   const cart: ProductItem[] = [];
-  const localStorageCart = localStorage.getItem('cart')
-  if(!localStorageCart)
-    {
-    const initCartItem: ProductItem = {name: product.name, description: product.description, _id:product._id, price: product.price, inventoryCount: 1}
-    cart.push(initCartItem)
-    localStorage.setItem('cart', JSON.stringify(cart))
-  }
-  else {
-    const userCart = JSON.parse(String(localStorage.getItem('cart')));
+  const localStorageCart = localStorage.getItem("cart");
+  if (!localStorageCart) {
+    const initCartItem: CartItem = {
+      name: product.name,
+      description: product.description,
+      _id: product._id,
+      price: product.price,
+      inventoryCount: product.inventoryCount,
+      orderCount: 1,
+    };
+    cart.push(initCartItem);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  } else {
+    const userCart = JSON.parse(String(localStorage.getItem("cart")));
 
-    let shoppingCart: ProductItem[] =  userCart as unknown as ProductItem[]
+    let shoppingCart: CartItem[] = userCart as unknown as CartItem[];
 
-    let productItem = shoppingCart.find(item => item.name === product?.name)
+    let cartItem = shoppingCart.find((item) => item.name === product?.name);
 
-    if(productItem){
-      const countIncrease = productItem?.inventoryCount + 1;
-      productItem.inventoryCount =  countIncrease
-      let finalshoppingCart = shoppingCart?.map(item => item.name !== product.name ? item : productItem)
-      localStorage.removeItem('cart')
-      localStorage.setItem('cart',JSON.stringify(finalshoppingCart))
+    if (cartItem) {
+      const countIncrease = cartItem?.orderCount + 1;
+      cartItem.orderCount = countIncrease;
+      let finalshoppingCart = shoppingCart?.map((item) =>
+        item.name !== product.name ? item : cartItem
+      );
+      localStorage.removeItem("cart");
+      localStorage.setItem("cart", JSON.stringify(finalshoppingCart));
     } else {
-      const initCartItem: ProductItem = {name: product.name, description: product.description, price: product.price, _id:product._id , inventoryCount: 1}
-      shoppingCart.push(initCartItem)
-      localStorage.removeItem('cart')
-      localStorage.setItem('cart',JSON.stringify(shoppingCart))
+      const initCartItem = {
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        _id: product._id,
+        inventoryCount: product.inventoryCount,
+        orderCount: 1
+      } as CartItem;
+      shoppingCart.push(initCartItem);
+      localStorage.removeItem("cart");
+      localStorage.setItem("cart", JSON.stringify(shoppingCart));
     }
   }
-}
+};
 
-export const removeItem = (product: ProductItem) => {
-    const userCart = JSON.parse(String(localStorage.getItem('cart')));
-    const shoppingCart =  userCart as unknown as ProductItem[]
-    let foundItem = shoppingCart.find(item => item.name === product.name)
-    if(foundItem){
-      foundItem.inventoryCount--
-      if(foundItem.inventoryCount <= 0)
-        {
-        const finalshoppingCart = shoppingCart?.filter(item => item.name !== product.name)
-        localStorage.removeItem('cart')
-        localStorage.setItem('cart',JSON.stringify(finalshoppingCart))
-      }
-      else{
-        const finalshoppingCart = shoppingCart?.map(item => item.name !== product.name ? item : foundItem)
-        localStorage.removeItem('cart')
-        localStorage.setItem('cart',JSON.stringify(finalshoppingCart))
-      }
+export const removeItem = (product: CartItem) => {
+  const userCart = JSON.parse(String(localStorage.getItem("cart")));
+  const shoppingCart = userCart as unknown as CartItem[];
+  let foundItem = shoppingCart.find((item) => item.name === product.name);
+  if (foundItem) {
+    foundItem.orderCount--;
+    if (foundItem.orderCount <= 0) {
+      const finalshoppingCart = shoppingCart?.filter(
+        (item) => item.name !== product.name
+      );
+      localStorage.removeItem("cart");
+      localStorage.setItem("cart", JSON.stringify(finalshoppingCart));
+    } else {
+      const finalshoppingCart = shoppingCart?.map((item) =>
+        item.name !== product.name ? item : foundItem
+      );
+      localStorage.removeItem("cart");
+      localStorage.setItem("cart", JSON.stringify(finalshoppingCart));
     }
-    else{
-      return
-    }
-}
+  } else {
+    return;
+  }
+};
 
-export const arraysAreEqual = (arr1: ProductItem[], arr2: ProductItem[]) => {
+export const arraysAreEqual = (arr1: CartItem[], arr2: CartItem[]) => {
   if (arr1.length !== arr2.length) return false;
-  
+
   for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i].name !== arr2[i].name ||
-        arr1[i].description !== arr2[i].description ||
-        arr1[i].price !== arr2[i].price ||
-        arr1[i].inventoryCount !== arr2[i].inventoryCount) {
+    if (
+      arr1[i].name !== arr2[i].name ||
+      arr1[i].description !== arr2[i].description ||
+      arr1[i].price !== arr2[i].price ||
+      arr1[i].inventoryCount !== arr2[i].inventoryCount
+    ) {
       return false;
     }
   }
-  
-  return true;
-}
 
-  
+  return true;
+};
