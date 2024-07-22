@@ -33,6 +33,7 @@ export const useLogin = () => {
             document.cookie =`TADIWA-AUTH=${json.user.authentication.sessionToken};Path=/; Domain=localhost;`;
             dispatch({type: 'Login', user: json.user})
             navigate("/");
+            navigate(0)
         }
     }
 
