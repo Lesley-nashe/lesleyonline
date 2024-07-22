@@ -8,15 +8,12 @@ import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const request = useMemo(() => getProducts(), []);
-  const results = useApiResult(request) as unknown as [];
+  const products = useApiResult(request) as unknown as ProductItem[];
   const navigate = useNavigate();
-  const data: ProductItem[] = results.map((item: any) => {
-    return item;
-  });
 
   const [value, setValue] = useState("");
   const handleChange = (event: any) => setValue(event.target.value);
-  const filteredData = data.filter((item: any) => {
+  const filteredProducts = products.filter((item: any) => {
     const searchText = value.toLowerCase();
     const nameSearch = item.name.toLowerCase();
     const descriptionSearch = item.description.toLowerCase();
@@ -59,7 +56,7 @@ const HomePage = () => {
             </Flex>
           </Flex>
           <SimpleGrid columns={1} spacing={10}>
-            {filteredData.map((product) => (
+            {filteredProducts.map((product) => (
               <ProductCard
                 name={product.name}
                 description={product.description}

@@ -56,7 +56,7 @@ const CheckoutPage = () => {
     setCartList(shoppingCart);
   }, [change]);
 
-  const finalShoppingCart = cartList.map((item) => {
+  const finalShoppingCart: ProductItem[] = cartList.map((item) => {
     const newItem = {
       name: item.name,
       description: item.description,
@@ -64,12 +64,8 @@ const CheckoutPage = () => {
       inventoryCount: item.inventoryCount,
       _id: item._id
     };
-    return newItem;
-  });
-
-  const finalPurchaseList: ProductItem[] = finalShoppingCart.map((item) => {
     return {
-      ...item,
+      ...newItem,
       action: (
         <>
           <Button onClick={() => cartAddition(item)} mx={2}>
@@ -77,15 +73,15 @@ const CheckoutPage = () => {
           </Button>{" "}
           <Button onClick={() => cartSubtraction(item)}>-</Button>
         </>
-      ),
-    };
+      )
+    } 
   });
 
   return (
     <Flex justifyContent={"center"} width={"100%"}>
       <Flex justifyContent={"center"} width={"100%"}>
         <Flex width={"100%"} direction={"column"}>
-          <TableComponent header="Cart" columns={columns} Data={finalPurchaseList} />
+          <TableComponent header="Cart" columns={columns} Data={finalShoppingCart} />
           <Flex mb={5} mr={10} justifyContent="flex-end">
             <Button onClick={onOpen} colorScheme="white" background="#22bb33">
               Checkout
