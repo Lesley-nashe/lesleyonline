@@ -7,11 +7,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import { useAuth } from "../../Authentication/AuthProvider";
 
 const ProfilePage = () => {
 
-  const user = JSON.parse(localStorage.getItem('user') || '[]')
-
+  const {user} = useAuth();
+  
   return (
     <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
       <Flex justifyContent={"center"} width={"50%"}>
@@ -24,8 +25,8 @@ const ProfilePage = () => {
           <Flex>
             <Formik
               initialValues={{
-                email: user.email,
-                username: user.username
+                email: user.email || '',
+                username: user.username || ''
               }}
               onSubmit={(values) => {
               }}

@@ -1,24 +1,36 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useApiResult = (request: any) => {
   const [results, setResults] = useState<any>();
-  const [error, setError] = useState('');
-  
+  const [error, setError] = useState<string>('');
+  const [loading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
-    fetch(request)
-      .then(async (response) => {
-        if (response.ok) {
-          setResults(await response.json());
-          setError('');
-        } else {
-          setError(await response.json());
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(request);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      })
-      .catch((err) => {
-        console.log(err)
-        setError(err.message);
-      });
+        const data = await response.json();
+        setResults(data);
+        setError('');
+      } catch (Error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (request) {
+      fetchData();
+    }
+
+    return () => {
+      // Cleanup or additional actions on unmount can be added here if needed
+    };
   }, [request]);
-  
-  return results ||  error;
+
+  return { results, loading, error };
 };

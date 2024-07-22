@@ -25,6 +25,7 @@ export type CartItem = {
   count: number;
 } 
 
+
 export const addToCart = (product: ProductItem) => {
   const cart: ProductItem[] = [];
   const localStorageCart = localStorage.getItem('cart')

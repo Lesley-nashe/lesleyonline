@@ -22,8 +22,6 @@ export const useCheckout = () => {
         if(response.ok){
             localStorage.removeItem('cart')
         }
-
     }
-
     return { checkout, isLoading, error }
 }

@@ -1,30 +1,26 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import {
   Button,
   Flex,
   FormErrorMessage,
   FormLabel,
   Input,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { useParams } from "react-router-dom";
-import { getProduct } from "../../Apis/product/request";
-import { useApiResult } from "../../Apis/product/apiResult";
+import { useCreateProduct } from "../../../hooks/useProductCreate";
 
-type Product = {
-  name: String,
-  inventoryCount: String,
-  description: String,
-  price: Number,
-  _id: Number
-}
-
-const Products = () => {
-  const { id } = useParams();
-  const request = useMemo(() => getProduct(id || ''), []);
-  const results = useApiResult(request) as Product;
-  console.log(results)
+const CreateProduct = () => {
+  const { createProduct } = useCreateProduct();
+  const handleSubmit = async (
+    name: String,
+    description: String,
+    price: Number,
+    inventoryCount: Number
+  ) => {
+    await createProduct(name, description, price, inventoryCount);
+  };
 
   return (
     <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
@@ -32,19 +28,24 @@ const Products = () => {
         <Flex direction={"column"}>
           <Flex justifyContent={"center"}>
             <Text fontSize={"50px"} fontWeight="bold">
-              Edit Product
+              Create Product
             </Text>
           </Flex>
           <Flex>
             <Formik
               initialValues={{
-                name: results.name,
-                description: results.description,
-                price: results.price,
-                inventoryCount: results.inventoryCount
+                name: "",
+                description: "",
+                price: 0,
+                inventoryCount: 0,
               }}
               onSubmit={(values) => {
-                console.log(values);
+                handleSubmit(
+                  values.name,
+                  values.description,
+                  values.price,
+                  values.inventoryCount
+                );
               }}
             >
               <Form>
@@ -74,7 +75,7 @@ const Products = () => {
                     as={Input}
                     id="price"
                     name="price"
-                    type='price'
+                    type="price"
                     variant="filled"
                   />
                 </Flex>
@@ -96,15 +97,7 @@ const Products = () => {
                     type="submit"
                     mx={2}
                   >
-                    Edit
-                  </Button>
-                  <Button
-                    colorScheme="white"
-                    background="red"
-                    type="submit"
-                    ml={5}
-                  >
-                    Delete
+                    Create
                   </Button>
                 </Flex>
               </Form>
@@ -116,4 +109,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default CreateProduct;

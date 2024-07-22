@@ -2,13 +2,14 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Header from '../components/Header'
 import LoginPage from '../Pages/LoginPage'
-import Products from '../Pages/ProductPage'
+import Products from '../Pages/ProductPage/EditProduct'
 import HomePage from '../Pages/LandingPage'
 import ProfilePage from '../Pages/ProfilePage'
 import CheckoutPage from '../Pages/CheckOutPage'
 import AuthProvider from '../Authentication/AuthProvider'
 import PrivateRoute from '../components/PrivateRoutes'
 import RegistrationPage from '../Pages/RegisterPage'
+import CreateProduct from '../Pages/ProductPage/CreateProduct'
 
 const AppRoutes = () => {
     
@@ -24,6 +25,7 @@ const AppRoutes = () => {
                   <Route path="/products/:id" element={<Products />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/product" element={<CreateProduct />} />
                 </Route>
             </Routes>
           </AuthProvider>
