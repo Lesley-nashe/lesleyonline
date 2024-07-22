@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from "react";
-import { CartItem, ProductItem } from "../../helpers";
+import { ProductItem } from "../../helpers";
 import { Button, Flex, Heading, Input, SimpleGrid } from "@chakra-ui/react";
-import { getProducts } from "../../Apis/products/request";
+import { getProducts } from "../../hooks/products/request";
 import ProductCard from "../../components/Product";
-import { useApiResult } from "../../Apis/products/apiResult";
+import { useApiResult } from "../../hooks/products/apiResult";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {

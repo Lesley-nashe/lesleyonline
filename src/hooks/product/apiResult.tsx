@@ -28,9 +28,8 @@ export const useApiResult = (request: any) => {
     }
 
     return () => {
-      // Cleanup or additional actions on unmount can be added here if needed
     };
-  }, [request]);
+  }, [request, error]);
 
   return { results, loading, error };
 };

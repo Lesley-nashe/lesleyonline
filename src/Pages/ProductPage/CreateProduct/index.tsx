@@ -1,15 +1,13 @@
-import { useMemo } from "react";
 import {
   Button,
   Flex,
   FormErrorMessage,
   FormLabel,
   Input,
-  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { useCreateProduct } from "../../../hooks/useProductCreate";
+import { useCreateProduct } from "../../../hooks/usePostProduct";
 
 const CreateProduct = () => {
   const { createProduct } = useCreateProduct();

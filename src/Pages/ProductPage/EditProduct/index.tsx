@@ -10,10 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useParams } from "react-router-dom";
-import { getProduct } from "../../../Apis/product/request";
-import { useApiResult } from "../../../Apis/product/apiResult";
 import { useUpdateProduct } from "../../../hooks/useUpdateProduct";
 import { useDeleteProduct } from "../../../hooks/useDeleteProduct";
+import { getProduct } from "../../../hooks/product/request";
+import { useApiResult } from "../../../hooks/product/apiResult";
 
 const Products = () => {
   const { id } = useParams();
@@ -21,7 +21,7 @@ const Products = () => {
   const { results, loading } = useApiResult(request);
   const { updateProduct } = useUpdateProduct();
   const { deleteProduct } = useDeleteProduct();
-
+  console.log(results)
   const handleSubmit = async (price: Number, inventoryCount: Number) => {
     await updateProduct(id || "", price, inventoryCount);
   };
