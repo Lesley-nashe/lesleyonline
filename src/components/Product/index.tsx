@@ -5,15 +5,12 @@ import {
   Stack,
   Heading,
   Text,
-  Divider,
-  CardFooter,
-  ButtonGroup,
   Button,
   Flex,
   useToast,
 } from "@chakra-ui/react";
-import React, { FC } from "react";
-import { addToCart, CartItem, ProductItem } from "../../helpers";
+import { FC } from "react";
+import { addToCart, ProductItem } from "../../helpers";
 import { useNavigate } from "react-router-dom";
 
 interface ProductProps {

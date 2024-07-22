@@ -13,7 +13,7 @@ import { useSignUp } from "../../hooks/useSignUp";
 
 
 const RegistrationPage = () => {
-  const { signup, isLoading, error } = useSignUp()
+  const { signup } = useSignUp()
   const handleSubmitEvent = async (email: string, username:string, password: string) => {
     if (email !== "" && username !=="" && password !== "") await signup(email, username, password);
     else alert("please provide a valid input");

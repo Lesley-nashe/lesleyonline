@@ -20,7 +20,7 @@ const MenuItem = (props: any) => {
 const Header = (props: any) => {
   const navigate = useNavigate();
   const { logout } = useLogout();
-  const { user } = useAuth();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
   return (
     <Flex
       as="nav"
@@ -42,7 +42,7 @@ const Header = (props: any) => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          {user ? (
+          {user.username? (
             <>
               <MenuItem
                 onClick={() => navigate("/")}

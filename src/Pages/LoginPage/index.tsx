@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 
 const LoginPage = () => {
-  const {login, isLoading, error} = useLogin()
+  const {login } = useLogin()
   const navigate = useNavigate();
   const handleSubmitEvent = async (email: string, password: string) => {
     if (email !== "" && password !== "") {

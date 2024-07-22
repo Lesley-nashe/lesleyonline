@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../Authentication/AuthProvider";
 
 const PrivateRoute = () => {
-  const user = useAuth();
-  return <Outlet />;
+  const localstorageUser = JSON.parse(localStorage.getItem("user") || "{}");
+  if(!localstorageUser.username) return <Navigate to="/login" />;
+  else return <Outlet />;
 };
 
 export default PrivateRoute;

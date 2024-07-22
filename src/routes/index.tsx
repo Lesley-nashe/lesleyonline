@@ -18,10 +18,10 @@ const AppRoutes = () => {
         <Header />
         <AuthProvider>
             <Routes>
-                <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<RegistrationPage />} />
                 <Route element={<PrivateRoute />}>
+                  <Route path="/" element={<HomePage />} />
                   <Route path="/products/:id" element={<Products />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />

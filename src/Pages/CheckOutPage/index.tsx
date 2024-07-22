@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import TableComponent from "../../components/Table";
 import {
   addToCart,
-  CartItem,
   column,
   ProductItem,
   removeItem,
@@ -54,39 +53,39 @@ const CheckoutPage = () => {
 
     const shoppingCart: ProductItem[] = userCart as unknown as ProductItem[];
 
-    const finalShoppingCart = shoppingCart.map((item) => {
-      const newItem = {
-        name: item.name,
-        description: item.description,
-        price: item.inventoryCount * item.price,
-        inventoryCount: item.inventoryCount,
-        _id: item._id
-      };
-      return newItem;
-    });
-
-    const finalPurchaseList: ProductItem[] = finalShoppingCart.map((item) => {
-      return {
-        ...item,
-        action: (
-          <>
-            <Button onClick={() => cartAddition(item)} mx={2}>
-              +
-            </Button>{" "}
-            <Button onClick={() => cartSubtraction(item)}>-</Button>
-          </>
-        ),
-      };
-    });
-
-    setCartList(finalPurchaseList);
+    setCartList(shoppingCart);
   }, [change]);
+
+  const finalShoppingCart = cartList.map((item) => {
+    const newItem = {
+      name: item.name,
+      description: item.description,
+      price: item.inventoryCount * item.price,
+      inventoryCount: item.inventoryCount,
+      _id: item._id
+    };
+    return newItem;
+  });
+
+  const finalPurchaseList: ProductItem[] = finalShoppingCart.map((item) => {
+    return {
+      ...item,
+      action: (
+        <>
+          <Button onClick={() => cartAddition(item)} mx={2}>
+            +
+          </Button>{" "}
+          <Button onClick={() => cartSubtraction(item)}>-</Button>
+        </>
+      ),
+    };
+  });
 
   return (
     <Flex justifyContent={"center"} width={"100%"}>
       <Flex justifyContent={"center"} width={"100%"}>
         <Flex width={"100%"} direction={"column"}>
-          <TableComponent header="Cart" columns={columns} Data={cartList} />
+          <TableComponent header="Cart" columns={columns} Data={finalPurchaseList} />
           <Flex mb={5} mr={10} justifyContent="flex-end">
             <Button onClick={onOpen} colorScheme="white" background="#22bb33">
               Checkout

@@ -14,20 +14,9 @@ const HomePage = () => {
     return item;
   });
 
-  const finalProductList: ProductItem[] = data.map((item) => {
-    const newItem = {
-      name: item.name,
-      description: item.description,
-      price: item.price,
-      inventoryCount: item.inventoryCount,
-      _id: item._id,
-    };
-    return newItem;
-  });
-
   const [value, setValue] = useState("");
   const handleChange = (event: any) => setValue(event.target.value);
-  const filteredData = finalProductList.filter((item: any) => {
+  const filteredData = data.filter((item: any) => {
     const searchText = value.toLowerCase();
     const nameSearch = item.name.toLowerCase();
     const descriptionSearch = item.description.toLowerCase();
