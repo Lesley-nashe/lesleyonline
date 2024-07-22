@@ -37,7 +37,6 @@ const RegistrationPage = () => {
                 username: ""
               }}
               onSubmit={(values) => {
-                console.log(values);
                 handleSubmitEvent(values.email, values.username, values.password);
               }}
             >

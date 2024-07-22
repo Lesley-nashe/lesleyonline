@@ -2,22 +2,24 @@ import React, { useMemo, useState } from "react";
 import { CartItem, ProductItem } from "../../helpers";
 import { Flex, Heading, Input, SimpleGrid } from "@chakra-ui/react";
 import { getProducts } from "../../Apis/products/request";
-import useApiResult from "../../Apis/products/apiResult";
 import ProductCard from "../../components/Product";
+import { useApiResult } from "../../Apis/products/apiResult";
 
 const HomePage = () => {
   const request = useMemo(() => getProducts(), []);
   const results = useApiResult(request) as unknown as [];
+  console.log(results)
   const data: ProductItem[] = results.map((item: any) => {
     return item;
   });
 
-  const finalProductList: CartItem[] = data.map((item) => {
+  const finalProductList: ProductItem[] = data.map((item) => {
     const newItem = {
       name: item.name,
       description: item.description,
       price: item.price,
-      count: item.inventoryCount,
+      inventoryCount: item.inventoryCount,
+      _id: item._id
     };
     return newItem;
   });
@@ -52,8 +54,8 @@ const HomePage = () => {
                 name={product.name}
                 description={product.description}
                 price={product.price}
-                inventoryCount={product.count}
-              />
+                inventoryCount={product.inventoryCount} 
+                id={product._id}              />
             ))}
           </SimpleGrid>
         </Flex>

@@ -13,13 +13,15 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { addToCart, CartItem } from "../../helpers";
+import { addToCart, CartItem, ProductItem } from "../../helpers";
+import { useNavigate } from "react-router-dom";
 
 interface ProductProps {
   name: String;
   description: String;
   price: number;
   inventoryCount: number;
+  id: String
 }
 
 const ProductCard: FC<ProductProps> = ({
@@ -27,13 +29,16 @@ const ProductCard: FC<ProductProps> = ({
   description,
   price,
   inventoryCount,
+  id
 }) => {
   const toast = useToast();
-  const newItem: CartItem = {
+  const navigate = useNavigate();
+  const newItem: ProductItem = {
     name: name,
     description: description,
     price: price,
-    count: inventoryCount,
+    inventoryCount: inventoryCount,
+    _id: id
   };
   return (
     <Flex>
@@ -57,6 +62,7 @@ const ProductCard: FC<ProductProps> = ({
             <Text color="blue.600" fontSize="medium">
               R{price}
             </Text>
+            <Flex direction={'row'}>
             <Button
               variant='solid' colorScheme='blue' my={3}
               onClick={() => {
@@ -72,6 +78,15 @@ const ProductCard: FC<ProductProps> = ({
             >
               Add to cart
             </Button>
+
+            <Button
+              variant='solid' colorScheme='green' my={3}
+              onClick={() => navigate(`/products/${newItem._id}`)}
+              ml={2}
+            >
+              Edit Product
+            </Button>
+            </Flex>
             </CardBody>
         </Stack>
       </Card>

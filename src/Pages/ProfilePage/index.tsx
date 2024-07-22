@@ -25,12 +25,9 @@ const ProfilePage = () => {
             <Formik
               initialValues={{
                 email: user.email,
-                password: "",
                 username: user.username
               }}
               onSubmit={(values) => {
-                console.log(values);
-                // handleSubmitEvent(values.email, values.password);
               }}
             >
               <Form>
@@ -51,16 +48,6 @@ const ProfilePage = () => {
                     id="username"
                     name="username"
                     type="username"
-                    variant="filled"
-                  />
-                </Flex>
-                <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="password">Password</FormLabel>
-                  <Field
-                    as={Input}
-                    id="password"
-                    name="password"
-                    type="password"
                     variant="filled"
                   />
                 </Flex>

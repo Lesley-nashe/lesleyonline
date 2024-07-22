@@ -1,16 +1,16 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Header from '../components/Header'
-import LoginPage from './LoginPage'
-import Products from './ProductPage'
-import HomePage from './LandingPage'
-import ProfilePage from './ProfilePage'
-import CheckoutPage from './CheckOutPage'
+import LoginPage from '../Pages/LoginPage'
+import Products from '../Pages/ProductPage'
+import HomePage from '../Pages/LandingPage'
+import ProfilePage from '../Pages/ProfilePage'
+import CheckoutPage from '../Pages/CheckOutPage'
 import AuthProvider from '../Authentication/AuthProvider'
 import PrivateRoute from '../components/PrivateRoutes'
-import RegistrationPage from './RegisterPage'
+import RegistrationPage from '../Pages/RegisterPage'
 
-const ProductPages = () => {
+const AppRoutes = () => {
     
   return (
     <>
@@ -21,7 +21,7 @@ const ProductPages = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<RegistrationPage />} />
                 <Route element={<PrivateRoute />}>
-                  <Route path="/products" element={<Products />} />
+                  <Route path="/products/:id" element={<Products />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
                 </Route>
@@ -31,4 +31,4 @@ const ProductPages = () => {
   )
 }
 
-export default ProductPages
+export default AppRoutes

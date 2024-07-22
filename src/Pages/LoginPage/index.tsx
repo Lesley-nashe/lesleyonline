@@ -39,7 +39,6 @@ const LoginPage = () => {
                 password: "",
               }}
               onSubmit={(values) => {
-                console.log(values);
                 handleSubmitEvent(values.email, values.password);
               }}
             >

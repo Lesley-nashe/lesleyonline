@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 export const useApiResult = (request: any) => {
-  const [results, setResults] = useState<any>([]);
+  const [results, setResults] = useState<any>();
   const [error, setError] = useState('');
+
+  console.log(request)
   
   useEffect(() => {
     fetch(request)
