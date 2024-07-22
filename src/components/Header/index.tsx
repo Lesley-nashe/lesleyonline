@@ -1,6 +1,5 @@
 import { Box, Flex, Text, Button, Link, Heading } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../Authentication/AuthProvider";
 import { useLogout } from "../../hooks/useLogin";
 
 const MenuItem = (props: any) => {
