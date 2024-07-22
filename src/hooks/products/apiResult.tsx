@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import  { useEffect, useState } from "react";
 
 export const useApiResult = (request: any) => {
   const [results, setResults] = useState<any>([]);
