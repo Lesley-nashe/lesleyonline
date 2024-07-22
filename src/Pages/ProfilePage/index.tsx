@@ -42,7 +42,7 @@ const ProfilePage = () => {
                   />
                 </Flex>
                 <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="email">Username</FormLabel>
+                  <FormLabel htmlFor="username">Username</FormLabel>
                   <Field
                     as={Input}
                     id="username"

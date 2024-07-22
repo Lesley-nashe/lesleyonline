@@ -12,11 +12,19 @@ import { useParams } from "react-router-dom";
 import { getProduct } from "../../Apis/product/request";
 import { useApiResult } from "../../Apis/product/apiResult";
 
+type Product = {
+  name: String,
+  inventoryCount: String,
+  description: String,
+  price: Number,
+  _id: Number
+}
+
 const Products = () => {
   const { id } = useParams();
   const request = useMemo(() => getProduct(id || ''), []);
-  const results = useApiResult(request);
-  const {inventoryCount, name, description, price } = results
+  const results = useApiResult(request) as Product;
+  console.log(results)
 
   return (
     <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
@@ -30,10 +38,10 @@ const Products = () => {
           <Flex>
             <Formik
               initialValues={{
-                name: name as String,
-                desciption: description as String,
-                price: price as Number,
-                inventoryCount: inventoryCount as Number,
+                name: results.name,
+                description: results.description,
+                price: results.price,
+                inventoryCount: results.inventoryCount
               }}
               onSubmit={(values) => {
                 console.log(values);
@@ -41,7 +49,7 @@ const Products = () => {
             >
               <Form>
                 <Flex width={"500px"} direction="column" mb={3}>
-                  <FormLabel htmlFor="email">Name</FormLabel>
+                  <FormLabel htmlFor="name">Name</FormLabel>
                   <Field
                     as={Input}
                     id="name"
@@ -51,7 +59,7 @@ const Products = () => {
                   />
                 </Flex>
                 <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="email">Description</FormLabel>
+                  <FormLabel htmlFor="description">Description</FormLabel>
                   <Field
                     as={Input}
                     id="description"
@@ -61,7 +69,7 @@ const Products = () => {
                   />
                 </Flex>
                 <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="password">Price</FormLabel>
+                  <FormLabel htmlFor="price">Price</FormLabel>
                   <Field
                     as={Input}
                     id="price"
@@ -71,7 +79,7 @@ const Products = () => {
                   />
                 </Flex>
                 <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="password">inventoryCount</FormLabel>
+                  <FormLabel htmlFor="inventoryCount">inventoryCount</FormLabel>
                   <Field
                     as={Input}
                     id="inventoryCount"
@@ -86,8 +94,17 @@ const Products = () => {
                     colorScheme="white"
                     background="#22bb33"
                     type="submit"
+                    mx={2}
                   >
                     Edit
+                  </Button>
+                  <Button
+                    colorScheme="white"
+                    background="red"
+                    type="submit"
+                    ml={5}
+                  >
+                    Delete
                   </Button>
                 </Flex>
               </Form>
