@@ -24,10 +24,12 @@ function showPosition(position: any) {
   center.lng = position.coords.longitude;
 }
 
-export default function MapLocation() {
+export default function MapLocation() 
+{
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDxg5TlQppm514g-TUTbqp3xBnegkg8uB8",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_APIKEY || ''
+    ,
   });
 
   const [map, setMap] = useState(null);
@@ -38,8 +40,6 @@ export default function MapLocation() {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
-    console.log(center);
-
     setMap(map);
   }, []);
 
