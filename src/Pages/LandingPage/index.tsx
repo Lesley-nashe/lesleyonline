@@ -1,6 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { ProductItem } from "../../helpers";
-import { Button, Flex, Heading, Input, SimpleGrid } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Heading,
+  Input,
+  SimpleGrid,
+  Spinner,
+} from "@chakra-ui/react";
 import { getProducts } from "../../hooks/products/request";
 import ProductCard from "../../components/Product";
 import { useApiResult } from "../../hooks/products/apiResult";
@@ -8,12 +14,12 @@ import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const request = useMemo(() => getProducts(), []);
-  const products = useApiResult(request) as unknown as ProductItem[];
+  const products = useApiResult(request) as any;
   const navigate = useNavigate();
 
   const [value, setValue] = useState("");
   const handleChange = (event: any) => setValue(event.target.value);
-  const filteredProducts = products.filter((item: any) => {
+  const filteredProducts = products.results.filter((item: any) => {
     const searchText = value.toLowerCase();
     const nameSearch = item.name.toLowerCase();
     const descriptionSearch = item.description.toLowerCase();
@@ -66,17 +72,27 @@ const HomePage = () => {
               </Flex>
             </Flex>
           </Flex>
-          <SimpleGrid columns={1} spacing={10}>
-            {filteredProducts.map((product) => (
-              <ProductCard
-                name={product.name}
-                description={product.description}
-                price={product.price}
-                inventoryCount={product.inventoryCount}
-                id={product._id}
-              />
-            ))}
-          </SimpleGrid>
+          {products.isLoading ? (
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          ) : (
+            <SimpleGrid columns={1} spacing={10}>
+              {filteredProducts.map((product: any) => (
+                <ProductCard
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  inventoryCount={product.inventoryCount}
+                  id={product._id}
+                />
+              ))}
+            </SimpleGrid>
+          )}
         </Flex>
       </Flex>
     </Flex>
