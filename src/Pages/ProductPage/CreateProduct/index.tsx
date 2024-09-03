@@ -1,12 +1,9 @@
 import {
   Button,
   Flex,
-  FormErrorMessage,
-  FormLabel,
-  Input,
   Text,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useCreateProduct } from "../../../hooks/usePostProduct";
 import { CreateSchema } from "../../../helpers";
 import FormInput from "../../../components/FormComponents/FormInput";

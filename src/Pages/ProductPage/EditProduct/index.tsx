@@ -5,7 +5,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useParams } from "react-router-dom";
 import { useUpdateProduct } from "../../../hooks/useUpdateProduct";
 import { useDeleteProduct } from "../../../hooks/useDeleteProduct";
