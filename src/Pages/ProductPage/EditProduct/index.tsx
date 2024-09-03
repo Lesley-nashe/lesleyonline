@@ -2,8 +2,6 @@ import { useMemo } from "react";
 import {
   Button,
   Flex,
-  FormLabel,
-  Input,
   Spinner,
   Text,
 } from "@chakra-ui/react";
@@ -13,7 +11,8 @@ import { useUpdateProduct } from "../../../hooks/useUpdateProduct";
 import { useDeleteProduct } from "../../../hooks/useDeleteProduct";
 import { getProduct } from "../../../hooks/product/request";
 import { useApiResult } from "../../../hooks/product/apiResult";
-import * as Yup from "yup";
+import FormInput from "../../../components/FormComponents/FormInput";
+import { EditSchema } from "../../../helpers";
 
 const Products = () => {
   const { id } = useParams();
@@ -28,25 +27,6 @@ const Products = () => {
   const handleDelete = async () => {
     await deleteProduct(id || "");
   };
-
-  const EditSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    description: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    price: Yup.number()
-      .typeError("Please enter a price. The field cannot be left blank.")
-      .positive("Must be a positive number."),
-    inventoryCount: Yup.number()
-      .typeError(
-        "Please enter an inventory count. The field cannot be left blank."
-      )
-      .positive("Must be a positive number."),
-  });
 
   return (
     <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
@@ -74,45 +54,37 @@ const Products = () => {
                 {({ errors }) => (
                   <Form>
                     <Flex width={"500px"} direction="column" mb={3}>
-                      <FormLabel htmlFor="name">Name</FormLabel>
-                      <Field
-                        as={Input}
-                        id="name"
+                      <FormInput
+                        labelColor={"black"}
+                        width={"500px"}
                         name="name"
-                        type="name"
-                        variant="filled"
+                        title="Name :"
+                        my={2}
+                        inputColor="#bbbbbb"
                       />
-                    </Flex>
-                    <Flex direction="column" mb={3}>
-                      <FormLabel htmlFor="description">Description</FormLabel>
-                      <Field
-                        as={Input}
-                        id="description"
+                      <FormInput
+                        labelColor={"black"}
+                        width={"500px"}
                         name="description"
-                        type="desciption"
-                        variant="filled"
+                        title="Description :"
+                        my={2}
+                        inputColor="#bbbbbb"
                       />
-                    </Flex>
-                    <Flex direction="column" mb={3}>
-                      <FormLabel htmlFor="price">Price</FormLabel>
-                      <Field
-                        as={Input}
-                        id="price"
+                      <FormInput
+                        labelColor={"black"}
+                        width={"500px"}
                         name="price"
-                        type="price"
-                        variant="filled"
+                        title="Price :"
+                        my={2}
+                        inputColor="#bbbbbb"
                       />
-                    </Flex>
-                    <Flex direction="column" mb={3}>
-                      <FormLabel htmlFor="inventoryCount">
-                        inventoryCount
-                      </FormLabel>
-                      <Field
-                        as={Input}
-                        id="inventoryCount"
+                      <FormInput
+                        labelColor={"black"}
+                        width={"500px"}
                         name="inventoryCount"
-                        type="inventoryCount"
-                        variant="filled"
+                        title="inventoryCount :"
+                        my={2}
+                        inputColor="#bbbbbb"
                       />
                     </Flex>
                     <Flex justifyContent={"center"} mt={4}>

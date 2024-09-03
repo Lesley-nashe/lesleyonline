@@ -1,6 +1,7 @@
-import { Box, Flex, Text, Button, Link, Heading } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Link, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogin";
+import logo from '../../assets/lesleyonline2.png'
 
 const MenuItem = (props: any) => {
   const { children, isLast, ...rest } = props;
@@ -29,10 +30,14 @@ const Header = (props: any) => {
       w="100%"
       mb={4}
       p={8}
-      bg={["primary.500", "primary.500", "transparent", "transparent"]}
+      bg={"white"}
       {...props}
+      borderBottom={"2px"}
+      top={0}
+      position="sticky"
+      zIndex={1000} // Adjust this value if needed
     >
-      <Flex align="center">{<Heading>LesleyOnline!!!!</Heading>}</Flex>
+      <Flex align="center">{<Image height={'50px'} src={logo} />}</Flex>
 
       <Box flexBasis={{ base: "100%", md: "auto" }}>
         <Flex
@@ -68,7 +73,7 @@ const Header = (props: any) => {
               <MenuItem>
                 <Button
                   size="sm"
-                  rounded="md"
+                  borderRadius={'50px'}
                   _hover={{
                     bg: [
                       "primary.100",

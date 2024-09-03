@@ -31,28 +31,39 @@ const HomePage = () => {
           direction={"column"}
           justifyContent={"center"}
         >
-          <Flex my={3} justifyContent={"center"}>
-            <Heading>Home page</Heading>
-          </Flex>
-          <Flex my={2} justifyContent="flex-end">
-            <Flex direction={'column'}>
-            <Input
-              value={value}
-              onChange={handleChange}
-              width="250px"
-              placeholder="Search"
-            />
-            <Flex>
-              <Button
-                colorScheme="white"
-                background="#22bb33"
-                onClick={() => navigate("/product")}
-                mt={2}
-                width="250px"
-              >
-                Create
-              </Button>
+          <Flex
+            width={"100%"}
+            direction={"column"}
+            justifyContent={"center"}
+            background={"#eeeeee"}
+            top={28}
+            position="sticky"
+            zIndex={700}
+          >
+            <Flex my={3} justifyContent={"center"}>
+              <Heading>Home page</Heading>
             </Flex>
+            <Flex my={2} justifyContent="flex-end">
+              <Flex direction={"column"}>
+                <Input
+                  value={value}
+                  onChange={handleChange}
+                  width="250px"
+                  placeholder="Search"
+                  background={"white"}
+                />
+                <Flex>
+                  <Button
+                    colorScheme="white"
+                    background="#22bb33"
+                    onClick={() => navigate("/product")}
+                    mt={2}
+                    width="250px"
+                  >
+                    Create
+                  </Button>
+                </Flex>
+              </Flex>
             </Flex>
           </Flex>
           <SimpleGrid columns={1} spacing={10}>

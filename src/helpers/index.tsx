@@ -1,3 +1,5 @@
+import * as Yup from "yup"
+
 export type column = {
   title: String;
   fieled: String;
@@ -112,3 +114,49 @@ export const arraysAreEqual = (arr1: CartItem[], arr2: CartItem[]) => {
 
   return true;
 };
+
+export const loginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("User Email is Required"),
+  password: Yup.string()
+    .min(4, "Passord must not be too short!")
+    .max(50, "Passowrd is too Long!")
+    .required("Password is Required"),
+});
+
+export const EditSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  description: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  price: Yup.number()
+    .typeError("Please enter a price. The field cannot be left blank.")
+    .positive("Must be a positive number."),
+  inventoryCount: Yup.number()
+    .typeError(
+      "Please enter an inventory count. The field cannot be left blank."
+    )
+    .positive("Must be a positive number."),
+});
+
+export const CreateSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  description: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  price: Yup.number()
+    .typeError("Please enter a price. The field cannot be left blank.")
+    .positive("Must be a positive number."),
+  inventoryCount: Yup.number()
+    .typeError(
+      "Please enter an inventory count. The field cannot be left blank."
+    )
+    .positive("Must be a positive number."),
+});

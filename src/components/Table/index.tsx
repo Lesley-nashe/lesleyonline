@@ -45,6 +45,7 @@ const TableComponent: FC<TableProps> = ({header , columns, Data}) => {
               onChange={handleChange}
               width="300px"
               placeholder="Search"
+              background={"white"}
             />
           </Flex>
           <TableContainer>

@@ -46,6 +46,7 @@ const ProductCard: FC<ProductProps> = ({
         variant="outline"
         width={'900px'}
         height={'170px'}
+        background={"#eeeeee"}
       >
         <Image
           objectFit="cover"

@@ -8,6 +8,8 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useCreateProduct } from "../../../hooks/usePostProduct";
+import { CreateSchema } from "../../../helpers";
+import FormInput from "../../../components/FormComponents/FormInput";
 
 const CreateProduct = () => {
   const { createProduct } = useCreateProduct();
@@ -37,6 +39,7 @@ const CreateProduct = () => {
                 price: 0,
                 inventoryCount: 0,
               }}
+              validationSchema={CreateSchema}
               onSubmit={(values) => {
                 handleSubmit(
                   values.name,
@@ -48,45 +51,38 @@ const CreateProduct = () => {
             >
               <Form>
                 <Flex width={"500px"} direction="column" mb={3}>
-                  <FormLabel htmlFor="name">Name</FormLabel>
-                  <Field
-                    as={Input}
-                    id="name"
+                  <FormInput
+                    labelColor={"black"}
+                    width={"500px"}
                     name="name"
-                    type="name"
-                    variant="filled"
+                    title="Name :"
+                    my={2}
+                    inputColor="#bbbbbb"
                   />
-                </Flex>
-                <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="description">Description</FormLabel>
-                  <Field
-                    as={Input}
-                    id="description"
+                  <FormInput
+                    labelColor={"black"}
+                    width={"500px"}
                     name="description"
-                    type="desciption"
-                    variant="filled"
+                    title="Description :"
+                    my={2}
+                    inputColor="#bbbbbb"
                   />
-                </Flex>
-                <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="price">Price</FormLabel>
-                  <Field
-                    as={Input}
-                    id="price"
+                  <FormInput
+                    labelColor={"black"}
+                    width={"500px"}
                     name="price"
-                    type="price"
-                    variant="filled"
+                    title="Price :"
+                    my={2}
+                    inputColor="#bbbbbb"
                   />
-                </Flex>
-                <Flex direction="column" mb={3}>
-                  <FormLabel htmlFor="inventoryCount">inventoryCount</FormLabel>
-                  <Field
-                    as={Input}
-                    id="inventoryCount"
+                  <FormInput
+                    labelColor={"black"}
+                    width={"500px"}
                     name="inventoryCount"
-                    type="inventoryCount"
-                    variant="filled"
+                    title="inventoryCount :"
+                    my={2}
+                    inputColor="#bbbbbb"
                   />
-                  <FormErrorMessage></FormErrorMessage>
                 </Flex>
                 <Flex justifyContent={"center"} mt={4}>
                   <Button
