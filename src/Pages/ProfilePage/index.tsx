@@ -1,12 +1,12 @@
 import React from "react";
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import { useAuth } from "../../Authentication/AuthProvider";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import FormInput from "../../components/FormComponents/FormInput";
 import MapLocation from "../../components/LocationMap/MapLocation";
 
 const ProfilePage = () => {
-  const { user } = useAuth();
+  const { currentUser } = useAuthContext();
 
   return (
     <Flex alignContent={"center"} justifyContent={"center"} width={"100%"}>
@@ -20,8 +20,8 @@ const ProfilePage = () => {
           <Flex>
             <Formik
               initialValues={{
-                email: user.email || "",
-                username: user.username || "",
+                email: currentUser.email || "",
+                username: currentUser.username || "",
               }}
               onSubmit={(values) => {}}
             >

@@ -1,4 +1,4 @@
-import * as Yup from "yup"
+import * as Yup from "yup";
 
 export type column = {
   title: String;
@@ -27,6 +27,12 @@ export type CartItem = {
   inventoryCount: number;
   orderCount: number;
   _id: String;
+};
+
+export type User = {
+  Id: String;
+  email: String;
+  username: String;
 };
 
 export const addToCart = (product: CartItem) => {
@@ -65,7 +71,7 @@ export const addToCart = (product: CartItem) => {
         price: product.price,
         _id: product._id,
         inventoryCount: product.inventoryCount,
-        orderCount: 1
+        orderCount: 1,
       } as CartItem;
       shoppingCart.push(initCartItem);
       localStorage.removeItem("cart");
@@ -121,6 +127,18 @@ export const loginSchema = Yup.object().shape({
     .min(4, "Passord must not be too short!")
     .max(50, "Passowrd is too Long!")
     .required("Password is Required"),
+});
+
+export const SignupSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("User Email is Required"),
+  password: Yup.string()
+    .min(4, "Passord must not be too short!")
+    .max(50, "Passowrd is too Long!")
+    .required("Password is Required"),
+  username: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
 });
 
 export const EditSchema = Yup.object().shape({

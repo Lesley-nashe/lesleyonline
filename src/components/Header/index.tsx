@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Button, Link, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useLogout } from "../../hooks/useLogin";
-import logo from '../../assets/lesleyonline2.png'
+import { useAuthContext } from "../../hooks/useAuthContext";
+import logo from "../../assets/lesleyonline2.png";
 
 const MenuItem = (props: any) => {
   const { children, isLast, ...rest } = props;
@@ -19,8 +19,7 @@ const MenuItem = (props: any) => {
 
 const Header = (props: any) => {
   const navigate = useNavigate();
-  const { logout } = useLogout();
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const { currentUser, signOut } = useAuthContext();
   return (
     <Flex
       as="nav"
@@ -35,9 +34,9 @@ const Header = (props: any) => {
       borderBottom={"2px"}
       top={0}
       position="sticky"
-      zIndex={1000} // Adjust this value if needed
+      zIndex={1000} 
     >
-      <Flex align="center">{<Image height={'50px'} src={logo} />}</Flex>
+      <Flex align="center">{<Image height={"50px"} src={logo} />}</Flex>
 
       <Box flexBasis={{ base: "100%", md: "auto" }}>
         <Flex
@@ -46,7 +45,7 @@ const Header = (props: any) => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          {user.username? (
+          {currentUser.username && (
             <>
               <MenuItem
                 onClick={() => navigate("/")}
@@ -73,7 +72,7 @@ const Header = (props: any) => {
               <MenuItem>
                 <Button
                   size="sm"
-                  borderRadius={'50px'}
+                  borderRadius={"50px"}
                   _hover={{
                     bg: [
                       "primary.100",
@@ -82,14 +81,14 @@ const Header = (props: any) => {
                       "primary.600",
                     ],
                   }}
-                  onClick={() => logout()}
+                  onClick={() => {
+                    signOut();
+                  }}
                 >
                   {"LogOut"}
                 </Button>
               </MenuItem>
             </>
-          ) : (
-            <></>
           )}
         </Flex>
       </Box>

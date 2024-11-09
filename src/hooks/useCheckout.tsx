@@ -4,7 +4,7 @@ export const useCheckout = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const checkout = async (price:number, userId: string, products: any ) => {
+    const checkout = async (price:number, userId: String, products: any ) => {
         setIsLoading(true);
         setError(null);
 

@@ -4,7 +4,6 @@ import {
   addToCart,
   CartItem,
   column,
-  ProductItem,
   removeItem,
 } from "../../helpers";
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
@@ -55,7 +54,7 @@ const CheckoutPage = () => {
     const shoppingCart: CartItem[] = userCart as unknown as CartItem[];
 
     setCartList(shoppingCart);
-  }, [change]);
+  }, [change, userCart]);
 
   const finalShoppingCart: CartItem[] = cartList.map((item) => {
     const newItem = {

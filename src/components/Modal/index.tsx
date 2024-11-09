@@ -15,7 +15,7 @@ import {
 import React, { FC } from "react";
 import { CartItem } from "../../helpers";
 import { useCheckout } from "../../hooks/useCheckout";
-import { useAuth } from "../../Authentication/AuthProvider";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ interface CheckoutModalProps {
 
 const CheckOutModal: FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
   const userCart = JSON.parse(localStorage.getItem("cart") || "[]");
-  const {user} = useAuth();
+  const { currentUser } = useAuthContext();
   const shoppingCart: CartItem[] =  userCart as unknown as CartItem[]
   const {checkout} = useCheckout();
 
@@ -69,7 +69,7 @@ const CheckOutModal: FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={async () => {
-              await checkout(sum, user.Id,productInputs)}}>
+              await checkout(sum, currentUser.Id,productInputs)}}>
               Purchase
             </Button>
           </ModalFooter>

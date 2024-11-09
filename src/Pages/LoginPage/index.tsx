@@ -1,31 +1,37 @@
-import React from "react";
-import {
-  Button,
-  Card,
-  Flex,
-  Text,
-} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { Button, Card, Flex, Spinner, Text } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../hooks/useLogin";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { loginSchema } from "../../helpers";
 import FormInput from "../../components/FormComponents/FormInput";
 
 const LoginPage = () => {
-  const { login } = useLogin();
+  const { login, isLoading, isAuthenticated } = useAuthContext();
   const navigate = useNavigate();
-  const handleSubmitEvent = async (email: string, password: string) => {
-    if (email !== "" && password !== "") {
-      await login(email, password);
-      return;
-    }
-    alert("please provide a valid input");
-  };
+
+  useEffect(() => {
+    const redirect = () => {
+      if (isAuthenticated) {
+        navigate("/");
+      } else {
+        navigate("/login");
+      }
+    };
+
+    redirect();
+  }, [isAuthenticated, navigate]);
 
   return (
-    <Flex py={2} alignContent={"center"} h='100vh' justifyContent={"center"} width={"100%"}>
-      <Flex height={'70%'} pt={8} justifyContent={"center"} width={"50%"}>
-        <Card borderRadius={28} background={'#dddddd'} p={8}>
+    <Flex
+      py={2}
+      alignContent={"center"}
+      h="100vh"
+      justifyContent={"center"}
+      width={"100%"}
+    >
+      <Flex height={"70%"} pt={8} justifyContent={"center"} width={"50%"}>
+        <Card borderRadius={28} background={"#dddddd"} p={8}>
           <Flex direction={"column"}>
             <Flex justifyContent={"center"}>
               <Text fontSize={"50px"} fontWeight="bold">
@@ -39,9 +45,7 @@ const LoginPage = () => {
                   password: "",
                 }}
                 validationSchema={loginSchema}
-                onSubmit={(values) => {
-                  handleSubmitEvent(values.email, values.password);
-                }}
+                onSubmit={(values) => login(values.email, values.password)}
               >
                 <Form>
                   <Flex width={"500px"} direction="column" mb={3}>
@@ -70,7 +74,7 @@ const LoginPage = () => {
                       type="submit"
                       mx={2}
                     >
-                      Login
+                      {isLoading ? <Spinner color="white" /> : "Login"}
                     </Button>
                     <Button
                       colorScheme="white"
@@ -78,7 +82,7 @@ const LoginPage = () => {
                       mx={2}
                       onClick={() => navigate("/signup")}
                     >
-                      Sign Up
+                      {isLoading ? <Spinner color="white" /> : "Sign Up"}
                     </Button>
                   </Flex>
                 </Form>

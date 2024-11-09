@@ -16,8 +16,8 @@ import Footer from "../components/Footer";
 const AppRoutes = () => {
   return (
     <Flex width={"100%"} direction={"column"} background={"#eeeeee"}>
-      <Header />
       <AuthProvider>
+      <Header />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegistrationPage />} />
